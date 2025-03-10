@@ -3,6 +3,10 @@ import requests
 import pytz  # Импортируем библиотеку pytz
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from keep_alive import keep_alive  # Импортируем keep_alive
+
+# Запускаем keep_alive, чтобы бот не "засыпал"
+keep_alive()
 
 # Настройка логирования
 logging.basicConfig(
