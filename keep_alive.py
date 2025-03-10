@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from threading import Thread
 
@@ -8,7 +9,7 @@ def home():
     return "I'm alive!"
 
 def run():
-    port = int(os.environ.get("PORT", 8080))  # Получаем порт из переменной окружения
+    port = int(os.environ.get("PORT", 10000))  # Получаем порт из переменной окружения
     app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
