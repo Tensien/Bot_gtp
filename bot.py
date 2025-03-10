@@ -5,9 +5,6 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from keep_alive import keep_alive  # Импортируем keep_alive
 
-# Запускаем keep_alive, чтобы бот не "засыпал"
-keep_alive()
-
 # Настройка логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -69,6 +66,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # Основная функция
 def main() -> None:
+    # Запускаем keep_alive, чтобы бот не "засыпал"
+    keep_alive()
     # Вставьте сюда ваш токен от Telegram BotFather
     application = Application.builder().token("7779461205:AAFykPTAvsxoUF5LsKIVRWVihXVQaGUb6Sc").build()
 
