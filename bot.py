@@ -52,7 +52,7 @@ async def send_to_openrouter(prompt: str) -> str:
 # Обработчик сообщений
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text
-    if text.startswith("дядя"):
+    if text.lower().startswith("дядя"):
         prompt = text[len("дядя"):].strip()
         if prompt:
             response = await send_to_openrouter(prompt)
