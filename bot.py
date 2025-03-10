@@ -12,7 +12,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Ваш API ключ от OpenRouter
-OPENROUTER_API_KEY = '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'
+OPENROUTER_API_KEY = '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'
 OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 # Модель DeepSeek-V3
