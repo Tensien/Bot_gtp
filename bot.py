@@ -1,9 +1,8 @@
 import logging
 import requests
-import pytz
+import pytz  # Импортируем библиотеку pytz
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from flask import Flask, request
 
 # Настройка логирования
 logging.basicConfig(
@@ -59,34 +58,25 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             response = await send_to_openrouter(prompt)
             await update.message.reply_text(response)
 
+
 # Обработчик команды /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text('Привет! Я бот, который отвечает на ваши вопросы. Используйте слово "дядя" для активации.')
-
-# Создаём Flask-приложение
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return "Бот работает!"
 
 # Основная функция
 def main() -> None:
     # Вставьте сюда ваш токен от Telegram BotFather
     application = Application.builder().token("7779461205:AAFykPTAvsxoUF5LsKIVRWVihXVQaGUb6Sc").build()
 
+    # Установка временной зоны для JobQueue
+    application.job_queue.scheduler.configure(timezone=pytz.UTC)
+
     # Регистрация обработчиков
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
-    # Запуск бота в режиме вебхука
-    application.run_webhook(
-        listen="0.0.0.0",  # Слушаем все интерфейсы
-        port=8080,         # Порт, который будет использовать Render
-        url_path="7779461205:AAFykPTAvsxoUF5LsKIVRWVihXVQaGUb6Sc",  # Путь для вебхука
-        webhook_url="https://Bot_gtp.onrender.com/7779461205:AAFykPTAvsxoUF5LsKIVRWVihXVQaGUb6Sc"  # Полный URL вебхука
-    )
+    # Запуск бота
+    application.run_polling()
 
 if __name__ == '__main__':
-    # Запуск Flask-приложения
-    app.run(host="0.0.0.0", port=8080)
+    main()
